@@ -170,3 +170,55 @@ public class LogisticsManagementSystem {
 
 &nbsp;   }
 
+private static void addCity() {
+
+&nbsp;       if (cityCount >= MAX\_CITIES) {
+
+&nbsp;           System.out.println("Maximum cities reached!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       System.out.print("Enter city name: ");
+
+&nbsp;       String cityName = sc.nextLine().trim();
+
+&nbsp;       
+
+&nbsp;       if (cityName.isEmpty()) {
+
+&nbsp;           System.out.println("City name cannot be empty!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       // Check for duplicate
+
+&nbsp;       for (int i = 0; i < cityCount; i++) {
+
+&nbsp;           if (cities\[i].equalsIgnoreCase(cityName)) {
+
+&nbsp;               System.out.println("City already exists!");
+
+&nbsp;               return;
+
+&nbsp;           }
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       cities\[cityCount] = cityName;
+
+&nbsp;       cityCount++;
+
+&nbsp;       System.out.println("City added successfully!");
+
+&nbsp;   }
+
