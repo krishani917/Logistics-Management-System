@@ -222,3 +222,25 @@ private static void addCity() {
 
 &nbsp;   }
 
+&nbsp;private static void viewCities() {
+
+&nbsp;       System.out.println("\\n=== Cities List ===");
+
+&nbsp;       if (cityCount == 0) {
+
+&nbsp;           System.out.println("No cities added yet.");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       for (int i = 0; i < cityCount; i++) {
+
+&nbsp;           System.out.println((i + 1) + ". " + cities\[i]);
+
+&nbsp;       }
+
+&nbsp;   }
+
