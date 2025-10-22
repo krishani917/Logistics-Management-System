@@ -244,3 +244,61 @@ private static void addCity() {
 
 &nbsp;   }
 
+private static void manageDistances() {
+
+&nbsp;       if (cityCount < 2) {
+
+&nbsp;           System.out.println("Need at least 2 cities to manage distances!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       while (true) {
+
+&nbsp;           System.out.println("\\n=== Distance Management ===");
+
+&nbsp;           System.out.println("1. Set Distance");
+
+&nbsp;           System.out.println("2. View Distance Table");
+
+&nbsp;           System.out.println("3. Back to Main Menu");
+
+&nbsp;           
+
+&nbsp;           int choice = getIntInput("Enter your choice: ");
+
+&nbsp;           
+
+&nbsp;           switch (choice) {
+
+&nbsp;               case 1:
+
+&nbsp;                   setDistance();
+
+&nbsp;                   break;
+
+&nbsp;               case 2: 
+
+&nbsp;                   viewDistanceTable();
+
+&nbsp;                   break;
+
+&nbsp;               case 3:
+
+&nbsp;                   return;
+
+&nbsp;               default:
+
+&nbsp;                   System.out.println("Invalid choice!");
+
+&nbsp;           }
+
+&nbsp;       }
+
+&nbsp;   }
+
+&nbsp;   
+
