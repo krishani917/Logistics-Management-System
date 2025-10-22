@@ -300,5 +300,45 @@ private static void manageDistances() {
 
 &nbsp;   }
 
+&nbsp;   private static void setDistance() {
+
+&nbsp;       viewCities();
+
+&nbsp;       int city1 = getIntInput("Enter first city number: ") - 1;
+
+&nbsp;       int city2 = getIntInput("Enter second city number: ") - 1;
+
+&nbsp;       
+
+&nbsp;       if (city1 < 0 || city1 >= cityCount || city2 < 0 || city2 >= cityCount) {
+
+&nbsp;           System.out.println("Invalid city selection!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       if (city1 == city2) {
+
+&nbsp;           System.out.println("Distance to same city is always 0!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       int distance = getIntInput("Enter distance (km): ");
+
+&nbsp;       distances\[city1]\[city2] = distance;
+
+&nbsp;       distances\[city2]\[city1] = distance; // Symmetric
+
+&nbsp;       System.out.println("Distance set successfully!");
+
+&nbsp;   }
+
 &nbsp;   
 
