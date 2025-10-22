@@ -108,5 +108,19 @@ public class LogisticsManagementSystem {
 
 &nbsp;   }
 
-&nbsp;   
+&nbsp;   private static void displayMainMenu() {
+
+&nbsp;       System.out.println("\\n=== Logistics Management System ===");
+
+&nbsp;       System.out.println("1. City Management");
+
+&nbsp;       System.out.println("2. Distance Management");
+
+&nbsp;       System.out.println("3. Delivery Request");
+
+&nbsp;       System.out.println("4. Reports");
+
+&nbsp;       System.out.println("5. Exit");
+
+&nbsp;   }
 
