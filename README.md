@@ -124,3 +124,49 @@ public class LogisticsManagementSystem {
 
 &nbsp;   }
 
+&nbsp;private static void manageCities() {
+
+&nbsp;       while (true) {
+
+&nbsp;           System.out.println("\\n=== City Management ===");
+
+&nbsp;           System.out.println("1. Add City");
+
+&nbsp;           System.out.println("2. View Cities");
+
+&nbsp;           System.out.println("3. Back to Main Menu");
+
+&nbsp;           
+
+&nbsp;           int choice = getIntInput("Enter your choice: ");
+
+&nbsp;           
+
+&nbsp;           switch (choice) {
+
+&nbsp;               case 1:
+
+&nbsp;                   addCity(); 
+
+&nbsp;                   break;
+
+&nbsp;               case 2: 
+
+&nbsp;                   viewCities(); 
+
+&nbsp;                   break;
+
+&nbsp;               case 3:
+
+&nbsp;                   return;
+
+&nbsp;               default:
+
+&nbsp;                   System.out.println("Invalid choice!");
+
+&nbsp;           }
+
+&nbsp;       }
+
+&nbsp;   }
+
