@@ -340,5 +340,35 @@ private static void manageDistances() {
 
 &nbsp;   }
 
-&nbsp;   
+&nbsp;   private static void viewDistanceTable() {
+
+&nbsp;       System.out.println("\\n=== Distance Table ===");
+
+&nbsp;       System.out.print("     ");
+
+&nbsp;       for (int i = 0; i < cityCount; i++) {
+
+&nbsp;           System.out.printf("%-10s", cities\[i].substring(0, Math.min(8, cities\[i].length())));
+
+&nbsp;       }
+
+&nbsp;       System.out.println();
+
+&nbsp;       
+
+&nbsp;       for (int i = 0; i < cityCount; i++) {
+
+&nbsp;           System.out.printf("%-5s", cities\[i].substring(0, Math.min(4, cities\[i].length())));
+
+&nbsp;           for (int j = 0; j < cityCount; j++) {
+
+&nbsp;               System.out.printf("%-10d", distances\[i]\[j]);
+
+&nbsp;           }
+
+&nbsp;           System.out.println();
+
+&nbsp;       }
+
+&nbsp;   }
 
