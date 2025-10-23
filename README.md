@@ -16,239 +16,367 @@ public class LogisticsManagementSystem {
 
     private static final double FUEL\_PRICE = 310.0;
 
-&nbsp;  
+ 
 
-&nbsp;  // Arrays for data storage
+   // Arrays for data storage
 
-&nbsp;   private static String\[] cities = new String\[MAX\_CITIES];
+    private static String\[] cities = new String\[MAX\_CITIES];
 
-&nbsp;   private static int\[]\[] distances = new int\[MAX\_CITIES]\[MAX\_CITIES];
+    private static int\[]\[] distances = new int\[MAX\_CITIES]\[MAX\_CITIES];
 
-&nbsp;   private static Delivery\[] deliveries = new Delivery\[MAX\_DELIVERIES];
+    private static Delivery\[] deliveries = new Delivery\[MAX\_DELIVERIES];
 
-&nbsp;   
+ 
 
-&nbsp;   // Vehicle data
+    // Vehicle data
 
-&nbsp;   private static final String\[] VEHICLE\_TYPES = {"Van", "Truck", "Lorry"};
+    private static final String\[] VEHICLE\_TYPES = {"Van", "Truck", "Lorry"};
 
-&nbsp;   private static final int\[] CAPACITIES = {1000, 5000, 10000};
+    private static final int\[] CAPACITIES = {1000, 5000, 10000};
 
-&nbsp;   private static final int\[] RATES\_PER\_KM = {30, 40, 80};
+    private static final int\[] RATES\_PER\_KM = {30, 40, 80};
 
-&nbsp;   private static final int\[] AVG\_SPEEDS = {60, 50, 45};
+    private static final int\[] AVG\_SPEEDS = {60, 50, 45};
 
-&nbsp;   private static final int\[] FUEL\_EFFICIENCIES = {12, 6, 4};
+    private static final int\[] FUEL\_EFFICIENCIES = {12, 6, 4};
 
-&nbsp;   
+ 
 
-&nbsp;   private static int cityCount = 0;
+    private static int cityCount = 0;
 
-&nbsp;   private static int deliveryCount = 0;
+    private static int deliveryCount = 0;
 
-&nbsp;   private static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
-&nbsp;   
+ 
 
-&nbsp;   public static void main(String\[] args) {
+    public static void main(String\[] args) {
 
-&nbsp;       loadData();
+        loadData();
 
-&nbsp;       
+ 
 
-&nbsp;       while (true) {
+        while (true) {
 
-&nbsp;           displayMainMenu();
+            displayMainMenu();
 
-&nbsp;           int choice = getIntInput("Enter your choice: ");
+            int choice = getIntInput("Enter your choice: ");
 
-&nbsp;           
+ 
 
-&nbsp;           switch (choice) {
+            switch (choice) {
 
-&nbsp;               case 1:
+                case 1:
 
-&nbsp;                   manageCities();
+                    manageCities();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 2:
+                case 2:
 
-&nbsp;                   manageDistances();
+                    manageDistances();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 3: 
+                case 3:
 
-&nbsp;                   handleDeliveryRequest();
+                    handleDeliveryRequest();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 4: 
+                case 4:
 
-&nbsp;                   generateReports();
+                    generateReports();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 5: 
+                case 5:
 
-&nbsp;                   saveData();
+                    saveData();
 
-&nbsp;                   System.out.println("Thank you for using Logistics Management System!");
+                    System.out.println("Thank you for using Logistics Management System!");
 
-&nbsp;                   return;
+                    return;
 
-&nbsp;               default: 
+                default:
 
-&nbsp;                   System.out.println("Invalid choice! Please try again.");
+                    System.out.println("Invalid choice! Please try again.");
 
-&nbsp;           }
+            }
 
-&nbsp;       }
+        }
 
-&nbsp;   }
+    }
 
-&nbsp;   private static void displayMainMenu() {
+    private static void displayMainMenu() {
 
-&nbsp;       System.out.println("\\n=== Logistics Management System ===");
+        System.out.println("\\n=== Logistics Management System ===");
 
-&nbsp;       System.out.println("1. City Management");
+        System.out.println("1. City Management");
 
-&nbsp;       System.out.println("2. Distance Management");
+        System.out.println("2. Distance Management");
 
-&nbsp;       System.out.println("3. Delivery Request");
+        System.out.println("3. Delivery Request");
 
-&nbsp;       System.out.println("4. Reports");
+        System.out.println("4. Reports");
 
-&nbsp;       System.out.println("5. Exit");
+        System.out.println("5. Exit");
 
-&nbsp;   }
+    }
 
-&nbsp;private static void manageCities() {
+ private static void manageCities() {
 
-&nbsp;       while (true) {
+        while (true) {
 
-&nbsp;           System.out.println("\\n=== City Management ===");
+            System.out.println("\\n=== City Management ===");
 
-&nbsp;           System.out.println("1. Add City");
+            System.out.println("1. Add City");
 
-&nbsp;           System.out.println("2. View Cities");
+            System.out.println("2. View Cities");
 
-&nbsp;           System.out.println("3. Back to Main Menu");
+            System.out.println("3. Back to Main Menu");
 
-&nbsp;           
+ 
 
-&nbsp;           int choice = getIntInput("Enter your choice: ");
+            int choice = getIntInput("Enter your choice: ");
 
-&nbsp;           
+ 
 
-&nbsp;           switch (choice) {
+            switch (choice) {
 
-&nbsp;               case 1:
+                case 1:
 
-&nbsp;                   addCity(); 
+                    addCity();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 2: 
+                case 2:
 
-&nbsp;                   viewCities(); 
+                    viewCities();
 
-&nbsp;                   break;
+                    break;
 
-&nbsp;               case 3:
+                case 3:
 
-&nbsp;                   return;
+                    return;
 
-&nbsp;               default:
+                default:
 
-&nbsp;                   System.out.println("Invalid choice!");
+                    System.out.println("Invalid choice!");
 
-&nbsp;           }
+            }
 
-&nbsp;       }
+        }
 
-&nbsp;   }
+    }
 
 private static void addCity() {
 
-&nbsp;       if (cityCount >= MAX\_CITIES) {
+        if (cityCount >= MAX\_CITIES) {
 
-&nbsp;           System.out.println("Maximum cities reached!");
+            System.out.println("Maximum cities reached!");
 
-&nbsp;           return;
+            return;
 
-&nbsp;       }
+        }
 
-&nbsp;       
+ 
 
-&nbsp;       System.out.print("Enter city name: ");
+        System.out.print("Enter city name: ");
 
-&nbsp;       String cityName = sc.nextLine().trim();
+        String cityName = sc.nextLine().trim();
 
-&nbsp;       
+ 
 
-&nbsp;       if (cityName.isEmpty()) {
+        if (cityName.isEmpty()) {
 
-&nbsp;           System.out.println("City name cannot be empty!");
+            System.out.println("City name cannot be empty!");
 
-&nbsp;           return;
+            return;
 
-&nbsp;       }
+        }
 
-&nbsp;       
+ 
 
-&nbsp;       // Check for duplicate
+        // Check for duplicate
 
-&nbsp;       for (int i = 0; i < cityCount; i++) {
+        for (int i = 0; i < cityCount; i++) {
 
-&nbsp;           if (cities\[i].equalsIgnoreCase(cityName)) {
+            if (cities\[i].equalsIgnoreCase(cityName)) {
 
-&nbsp;               System.out.println("City already exists!");
+                System.out.println("City already exists!");
 
-&nbsp;               return;
+                return;
 
-&nbsp;           }
+            }
 
-&nbsp;       }
+        }
 
-&nbsp;       
+ 
 
-&nbsp;       cities\[cityCount] = cityName;
+        cities\[cityCount] = cityName;
 
-&nbsp;       cityCount++;
+        cityCount++;
 
-&nbsp;       System.out.println("City added successfully!");
+        System.out.println("City added successfully!");
 
-&nbsp;   }
+    }
 
-&nbsp;private static void viewCities() {
+ private static void viewCities() {
 
-&nbsp;       System.out.println("\\n=== Cities List ===");
+        System.out.println("\\n=== Cities List ===");
 
-&nbsp;       if (cityCount == 0) {
+        if (cityCount == 0) {
 
-&nbsp;           System.out.println("No cities added yet.");
+            System.out.println("No cities added yet.");
 
-&nbsp;           return;
+            return;
 
-&nbsp;       }
+        }
 
-&nbsp;       
+ 
 
-&nbsp;       for (int i = 0; i < cityCount; i++) {
+        for (int i = 0; i < cityCount; i++) {
 
-&nbsp;           System.out.println((i + 1) + ". " + cities\[i]);
+            System.out.println((i + 1) + ". " + cities\[i]);
 
-&nbsp;       }
+        }
 
-&nbsp;   }
+    }
 
 private static void manageDistances() {
 
+        if (cityCount < 2) {
+
+            System.out.println("Need at least 2 cities to manage distances!");
+
+            return;
+
+        }
+
+ 
+
+        while (true) {
+
+            System.out.println("\\n=== Distance Management ===");
+
+            System.out.println("1. Set Distance");
+
+            System.out.println("2. View Distance Table");
+
+            System.out.println("3. Back to Main Menu");
+
+ 
+
+            int choice = getIntInput("Enter your choice: ");
+
+ 
+
+            switch (choice) {
+
+                case 1:
+
+                    setDistance();
+
+                    break;
+
+                case 2:
+
+                    viewDistanceTable();
+
+                    break;
+
+                case 3:
+
+                    return;
+
+                default:
+
+                    System.out.println("Invalid choice!");
+
+            }
+
+        }
+
+    }
+
+    private static void setDistance() {
+
+        viewCities();
+
+        int city1 = getIntInput("Enter first city number: ") - 1;
+
+        int city2 = getIntInput("Enter second city number: ") - 1;
+
+ 
+
+        if (city1 < 0 || city1 >= cityCount || city2 < 0 || city2 >= cityCount) {
+
+            System.out.println("Invalid city selection!");
+
+            return;
+
+        }
+
+ 
+
+        if (city1 == city2) {
+
+            System.out.println("Distance to same city is always 0!");
+
+            return;
+
+        }
+
+ 
+
+        int distance = getIntInput("Enter distance (km): ");
+
+        distances\[city1]\[city2] = distance;
+
+        distances\[city2]\[city1] = distance; // Symmetric
+
+        System.out.println("Distance set successfully!");
+
+    }
+
+    private static void viewDistanceTable() {
+
+        System.out.println("\\n=== Distance Table ===");
+
+        System.out.print("     ");
+
+        for (int i = 0; i < cityCount; i++) {
+
+            System.out.printf("%-10s", cities\[i].substring(0, Math.min(8, cities\[i].length())));
+
+        }
+
+        System.out.println();
+
+ 
+
+        for (int i = 0; i < cityCount; i++) {
+
+            System.out.printf("%-5s", cities\[i].substring(0, Math.min(4, cities\[i].length())));
+
+            for (int j = 0; j < cityCount; j++) {
+
+                System.out.printf("%-10d", distances\[i]\[j]);
+
+            }
+
+            System.out.println();
+
+        }
+
+    }
+
+private static void handleDeliveryRequest() {
+
 &nbsp;       if (cityCount < 2) {
 
-&nbsp;           System.out.println("Need at least 2 cities to manage distances!");
+&nbsp;           System.out.println("Need at least 2 cities for delivery!");
 
 &nbsp;           return;
 
@@ -256,61 +384,29 @@ private static void manageDistances() {
 
 &nbsp;       
 
-&nbsp;       while (true) {
+&nbsp;       if (deliveryCount >= MAX\_DELIVERIES) {
 
-&nbsp;           System.out.println("\\n=== Distance Management ===");
+&nbsp;           System.out.println("Maximum deliveries reached!");
 
-&nbsp;           System.out.println("1. Set Distance");
-
-&nbsp;           System.out.println("2. View Distance Table");
-
-&nbsp;           System.out.println("3. Back to Main Menu");
-
-&nbsp;           
-
-&nbsp;           int choice = getIntInput("Enter your choice: ");
-
-&nbsp;           
-
-&nbsp;           switch (choice) {
-
-&nbsp;               case 1:
-
-&nbsp;                   setDistance();
-
-&nbsp;                   break;
-
-&nbsp;               case 2: 
-
-&nbsp;                   viewDistanceTable();
-
-&nbsp;                   break;
-
-&nbsp;               case 3:
-
-&nbsp;                   return;
-
-&nbsp;               default:
-
-&nbsp;                   System.out.println("Invalid choice!");
-
-&nbsp;           }
+&nbsp;           return;
 
 &nbsp;       }
 
-&nbsp;   }
+&nbsp;       
 
-&nbsp;   private static void setDistance() {
+&nbsp;       System.out.println("\\n=== New Delivery Request ===");
 
 &nbsp;       viewCities();
 
-&nbsp;       int city1 = getIntInput("Enter first city number: ") - 1;
+&nbsp;       
 
-&nbsp;       int city2 = getIntInput("Enter second city number: ") - 1;
+&nbsp;       int source = getIntInput("Enter source city number: ") - 1;
+
+&nbsp;       int destination = getIntInput("Enter destination city number: ") - 1;
 
 &nbsp;       
 
-&nbsp;       if (city1 < 0 || city1 >= cityCount || city2 < 0 || city2 >= cityCount) {
+&nbsp;       if (source < 0 || source >= cityCount || destination < 0 || destination >= cityCount) {
 
 &nbsp;           System.out.println("Invalid city selection!");
 
@@ -320,9 +416,9 @@ private static void manageDistances() {
 
 &nbsp;       
 
-&nbsp;       if (city1 == city2) {
+&nbsp;       if (source == destination) {
 
-&nbsp;           System.out.println("Distance to same city is always 0!");
+&nbsp;           System.out.println("Source and destination cannot be same!");
 
 &nbsp;           return;
 
@@ -330,45 +426,59 @@ private static void manageDistances() {
 
 &nbsp;       
 
-&nbsp;       int distance = getIntInput("Enter distance (km): ");
+&nbsp;       if (distances\[source]\[destination] == 0) {
 
-&nbsp;       distances\[city1]\[city2] = distance;
+&nbsp;           System.out.println("Distance not set between these cities!");
 
-&nbsp;       distances\[city2]\[city1] = distance; // Symmetric
-
-&nbsp;       System.out.println("Distance set successfully!");
-
-&nbsp;   }
-
-&nbsp;   private static void viewDistanceTable() {
-
-&nbsp;       System.out.println("\\n=== Distance Table ===");
-
-&nbsp;       System.out.print("     ");
-
-&nbsp;       for (int i = 0; i < cityCount; i++) {
-
-&nbsp;           System.out.printf("%-10s", cities\[i].substring(0, Math.min(8, cities\[i].length())));
+&nbsp;           return;
 
 &nbsp;       }
-
-&nbsp;       System.out.println();
 
 &nbsp;       
 
-&nbsp;       for (int i = 0; i < cityCount; i++) {
+&nbsp;       // Display vehicle options
 
-&nbsp;           System.out.printf("%-5s", cities\[i].substring(0, Math.min(4, cities\[i].length())));
+&nbsp;       System.out.println("\\nVehicle Options:");
 
-&nbsp;           for (int j = 0; j < cityCount; j++) {
+&nbsp;       for (int i = 0; i < VEHICLE\_TYPES.length; i++) {
 
-&nbsp;               System.out.printf("%-10d", distances\[i]\[j]);
+&nbsp;           System.out.println((i + 1) + ". " + VEHICLE\_TYPES\[i] + 
 
-&nbsp;           }
+&nbsp;                            " (Capacity: " + CAPACITIES\[i] + "kg, Rate: " + 
 
-&nbsp;           System.out.println();
+&nbsp;                            RATES\_PER\_KM\[i] + " LKR/km)");
 
 &nbsp;       }
+
+&nbsp;       
+
+&nbsp;       int vehicleType = getIntInput("Select vehicle (1-3): ") - 1;
+
+&nbsp;       if (vehicleType < 0 || vehicleType >= VEHICLE\_TYPES.length) {
+
+&nbsp;           System.out.println("Invalid vehicle selection!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       int weight = getIntInput("Enter weight (kg): ");
+
+&nbsp;       if (weight > CAPACITIES\[vehicleType]) {
+
+&nbsp;           System.out.println("Weight exceeds vehicle capacity!");
+
+&nbsp;           return;
+
+&nbsp;       }
+
+&nbsp;       
+
+&nbsp;       // Calculate delivery details
+
+&nbsp;       calculateAndDisplayDelivery(source, destination, vehicleType, weight);
 
 &nbsp;   }
 
