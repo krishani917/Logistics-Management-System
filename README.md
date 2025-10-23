@@ -482,3 +482,69 @@ private static void handleDeliveryRequest() {
 
 &nbsp;   }
 
+&nbsp;private static void calculateAndDisplayDelivery(int source, int destination, int vehicleType, int weight) {
+
+&nbsp;       int distance = distances\[source]\[destination];
+
+&nbsp;       double baseCost = distance \* RATES\_PER\_KM\[vehicleType] \* (1 + weight / 10000.0);
+
+&nbsp;       double deliveryTime = (double) distance / AVG\_SPEEDS\[vehicleType];
+
+&nbsp;       double fuelUsed = (double) distance / FUEL\_EFFICIENCIES\[vehicleType];
+
+&nbsp;       double fuelCost = fuelUsed \* FUEL\_PRICE;
+
+&nbsp;       double operationalCost = baseCost + fuelCost;
+
+&nbsp;       double profit = baseCost \* 0.25;
+
+&nbsp;       double customerCharge = operationalCost + profit;
+
+&nbsp;       
+
+&nbsp;       // Store delivery record
+
+&nbsp;       deliveries\[deliveryCount] = new Delivery(
+
+&nbsp;           cities\[source], cities\[destination], distance, 
+
+&nbsp;           VEHICLE\_TYPES\[vehicleType], weight, customerCharge, deliveryTime
+
+&nbsp;       );
+
+&nbsp;       deliveryCount++;
+
+&nbsp;       
+
+&nbsp;       // Display results
+
+&nbsp;       System.out.println("\\n--- DELIVERY COST ESTIMATION ---");
+
+&nbsp;       System.out.println("From: " + cities\[source]);
+
+&nbsp;       System.out.println("To: " + cities\[destination]);
+
+&nbsp;       System.out.println("Distance: " + distance + " km");
+
+&nbsp;       System.out.println("Vehicle: " + VEHICLE\_TYPES\[vehicleType]);
+
+&nbsp;       System.out.println("Weight: " + weight + " kg");
+
+&nbsp;       System.out.printf("Base Cost: %.2f LKR\\n", baseCost);
+
+&nbsp;       System.out.printf("Fuel Used: %.2f L\\n", fuelUsed);
+
+&nbsp;       System.out.printf("Fuel Cost: %.2f LKR\\n", fuelCost);
+
+&nbsp;       System.out.printf("Operational Cost: %.2f LKR\\n", operationalCost);
+
+&nbsp;       System.out.printf("Profit: %.2f LKR\\n", profit);
+
+&nbsp;       System.out.printf("Customer Charge: %.2f LKR\\n", customerCharge);
+
+&nbsp;       System.out.printf("Estimated Time: %.2f hours\\n", deliveryTime);
+
+&nbsp;   }
+
+&nbsp;   
+
