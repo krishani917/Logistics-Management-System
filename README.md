@@ -374,175 +374,237 @@ private static void manageDistances() {
 
 private static void handleDeliveryRequest() {
 
-&nbsp;       if (cityCount < 2) {
+        if (cityCount < 2) {
 
-&nbsp;           System.out.println("Need at least 2 cities for delivery!");
+            System.out.println("Need at least 2 cities for delivery!");
 
-&nbsp;           return;
+            return;
+
+        }
+
+ 
+
+        if (deliveryCount >= MAX\_DELIVERIES) {
+
+            System.out.println("Maximum deliveries reached!");
+
+            return;
+
+        }
+
+ 
+
+        System.out.println("\\n=== New Delivery Request ===");
+
+        viewCities();
+
+ 
+
+        int source = getIntInput("Enter source city number: ") - 1;
+
+        int destination = getIntInput("Enter destination city number: ") - 1;
+
+ 
+
+        if (source < 0 || source >= cityCount || destination < 0 || destination >= cityCount) {
+
+            System.out.println("Invalid city selection!");
+
+            return;
+
+        }
+
+ 
+
+        if (source == destination) {
+
+            System.out.println("Source and destination cannot be same!");
+
+            return;
+
+        }
+
+ 
+
+        if (distances\[source]\[destination] == 0) {
+
+            System.out.println("Distance not set between these cities!");
+
+            return;
+
+        }
+
+ 
+
+        // Display vehicle options
+
+        System.out.println("\\nVehicle Options:");
+
+        for (int i = 0; i < VEHICLE\_TYPES.length; i++) {
+
+            System.out.println((i + 1) + ". " + VEHICLE\_TYPES\[i] +
+
+                             " (Capacity: " + CAPACITIES\[i] + "kg, Rate: " +
+
+                             RATES\_PER\_KM\[i] + " LKR/km)");
+
+        }
+
+ 
+
+        int vehicleType = getIntInput("Select vehicle (1-3): ") - 1;
+
+        if (vehicleType < 0 || vehicleType >= VEHICLE\_TYPES.length) {
+
+            System.out.println("Invalid vehicle selection!");
+
+            return;
+
+        }
+
+ 
+
+        int weight = getIntInput("Enter weight (kg): ");
+
+        if (weight > CAPACITIES\[vehicleType]) {
+
+            System.out.println("Weight exceeds vehicle capacity!");
+
+            return;
+
+        }
+
+ 
+
+        // Calculate delivery details
+
+        calculateAndDisplayDelivery(source, destination, vehicleType, weight);
+
+    }
+
+ private static void calculateAndDisplayDelivery(int source, int destination, int vehicleType, int weight) {
+
+        int distance = distances\[source]\[destination];
+
+        double baseCost = distance \* RATES\_PER\_KM\[vehicleType] \* (1 + weight / 10000.0);
+
+        double deliveryTime = (double) distance / AVG\_SPEEDS\[vehicleType];
+
+        double fuelUsed = (double) distance / FUEL\_EFFICIENCIES\[vehicleType];
+
+        double fuelCost = fuelUsed \* FUEL\_PRICE;
+
+        double operationalCost = baseCost + fuelCost;
+
+        double profit = baseCost \* 0.25;
+
+        double customerCharge = operationalCost + profit;
+
+ 
+
+        // Store delivery record
+
+        deliveries\[deliveryCount] = new Delivery(
+
+            cities\[source], cities\[destination], distance,
+
+            VEHICLE\_TYPES\[vehicleType], weight, customerCharge, deliveryTime
+
+        );
+
+        deliveryCount++;
+
+ 
+
+        // Display results
+
+        System.out.println("\\n--- DELIVERY COST ESTIMATION ---");
+
+        System.out.println("From: " + cities\[source]);
+
+        System.out.println("To: " + cities\[destination]);
+
+        System.out.println("Distance: " + distance + " km");
+
+        System.out.println("Vehicle: " + VEHICLE\_TYPES\[vehicleType]);
+
+        System.out.println("Weight: " + weight + " kg");
+
+        System.out.printf("Base Cost: %.2f LKR\\n", baseCost);
+
+        System.out.printf("Fuel Used: %.2f L\\n", fuelUsed);
+
+        System.out.printf("Fuel Cost: %.2f LKR\\n", fuelCost);
+
+        System.out.printf("Operational Cost: %.2f LKR\\n", operationalCost);
+
+        System.out.printf("Profit: %.2f LKR\\n", profit);
+
+        System.out.printf("Customer Charge: %.2f LKR\\n", customerCharge);
+
+        System.out.printf("Estimated Time: %.2f hours\\n", deliveryTime);
+
+    }
+
+ private static void generateReports() {
+
+&nbsp;       System.out.println("\\n=== Performance Reports ===");
+
+&nbsp;       System.out.println("Total Deliveries Completed: " + deliveryCount);
+
+&nbsp;       
+
+&nbsp;       double totalDistance = 0;
+
+&nbsp;       double totalRevenue = 0;
+
+&nbsp;       double totalProfit = 0;
+
+&nbsp;       double totalTime = 0;
+
+&nbsp;       double longestRoute = 0;
+
+&nbsp;       double shortestRoute = Double.MAX\_VALUE;
+
+&nbsp;       
+
+&nbsp;       for (int i = 0; i < deliveryCount; i++) {
+
+&nbsp;           Delivery delivery = deliveries\[i];
+
+&nbsp;           totalDistance += delivery.distance;
+
+&nbsp;           totalRevenue += delivery.cost;
+
+&nbsp;           totalProfit += delivery.cost \* 0.25; // Assuming 25% profit margin
+
+&nbsp;           totalTime += delivery.time;
+
+&nbsp;           
+
+&nbsp;           if (delivery.distance > longestRoute) longestRoute = delivery.distance;
+
+&nbsp;           if (delivery.distance < shortestRoute) shortestRoute = delivery.distance;
 
 &nbsp;       }
 
 &nbsp;       
 
-&nbsp;       if (deliveryCount >= MAX\_DELIVERIES) {
+&nbsp;       System.out.printf("Total Distance Covered: %.2f km\\n", totalDistance);
 
-&nbsp;           System.out.println("Maximum deliveries reached!");
+&nbsp;       System.out.printf("Average Delivery Time: %.2f hours\\n", 
 
-&nbsp;           return;
+&nbsp;                        deliveryCount > 0 ? totalTime / deliveryCount : 0);
 
-&nbsp;       }
+&nbsp;       System.out.printf("Total Revenue: %.2f LKR\\n", totalRevenue);
 
-&nbsp;       
+&nbsp;       System.out.printf("Total Profit: %.2f LKR\\n", totalProfit);
 
-&nbsp;       System.out.println("\\n=== New Delivery Request ===");
+&nbsp;       System.out.printf("Longest Route: %.2f km\\n", longestRoute);
 
-&nbsp;       viewCities();
+&nbsp;       System.out.printf("Shortest Route: %.2f km\\n", 
 
-&nbsp;       
-
-&nbsp;       int source = getIntInput("Enter source city number: ") - 1;
-
-&nbsp;       int destination = getIntInput("Enter destination city number: ") - 1;
-
-&nbsp;       
-
-&nbsp;       if (source < 0 || source >= cityCount || destination < 0 || destination >= cityCount) {
-
-&nbsp;           System.out.println("Invalid city selection!");
-
-&nbsp;           return;
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       if (source == destination) {
-
-&nbsp;           System.out.println("Source and destination cannot be same!");
-
-&nbsp;           return;
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       if (distances\[source]\[destination] == 0) {
-
-&nbsp;           System.out.println("Distance not set between these cities!");
-
-&nbsp;           return;
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       // Display vehicle options
-
-&nbsp;       System.out.println("\\nVehicle Options:");
-
-&nbsp;       for (int i = 0; i < VEHICLE\_TYPES.length; i++) {
-
-&nbsp;           System.out.println((i + 1) + ". " + VEHICLE\_TYPES\[i] + 
-
-&nbsp;                            " (Capacity: " + CAPACITIES\[i] + "kg, Rate: " + 
-
-&nbsp;                            RATES\_PER\_KM\[i] + " LKR/km)");
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       int vehicleType = getIntInput("Select vehicle (1-3): ") - 1;
-
-&nbsp;       if (vehicleType < 0 || vehicleType >= VEHICLE\_TYPES.length) {
-
-&nbsp;           System.out.println("Invalid vehicle selection!");
-
-&nbsp;           return;
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       int weight = getIntInput("Enter weight (kg): ");
-
-&nbsp;       if (weight > CAPACITIES\[vehicleType]) {
-
-&nbsp;           System.out.println("Weight exceeds vehicle capacity!");
-
-&nbsp;           return;
-
-&nbsp;       }
-
-&nbsp;       
-
-&nbsp;       // Calculate delivery details
-
-&nbsp;       calculateAndDisplayDelivery(source, destination, vehicleType, weight);
-
-&nbsp;   }
-
-&nbsp;private static void calculateAndDisplayDelivery(int source, int destination, int vehicleType, int weight) {
-
-&nbsp;       int distance = distances\[source]\[destination];
-
-&nbsp;       double baseCost = distance \* RATES\_PER\_KM\[vehicleType] \* (1 + weight / 10000.0);
-
-&nbsp;       double deliveryTime = (double) distance / AVG\_SPEEDS\[vehicleType];
-
-&nbsp;       double fuelUsed = (double) distance / FUEL\_EFFICIENCIES\[vehicleType];
-
-&nbsp;       double fuelCost = fuelUsed \* FUEL\_PRICE;
-
-&nbsp;       double operationalCost = baseCost + fuelCost;
-
-&nbsp;       double profit = baseCost \* 0.25;
-
-&nbsp;       double customerCharge = operationalCost + profit;
-
-&nbsp;       
-
-&nbsp;       // Store delivery record
-
-&nbsp;       deliveries\[deliveryCount] = new Delivery(
-
-&nbsp;           cities\[source], cities\[destination], distance, 
-
-&nbsp;           VEHICLE\_TYPES\[vehicleType], weight, customerCharge, deliveryTime
-
-&nbsp;       );
-
-&nbsp;       deliveryCount++;
-
-&nbsp;       
-
-&nbsp;       // Display results
-
-&nbsp;       System.out.println("\\n--- DELIVERY COST ESTIMATION ---");
-
-&nbsp;       System.out.println("From: " + cities\[source]);
-
-&nbsp;       System.out.println("To: " + cities\[destination]);
-
-&nbsp;       System.out.println("Distance: " + distance + " km");
-
-&nbsp;       System.out.println("Vehicle: " + VEHICLE\_TYPES\[vehicleType]);
-
-&nbsp;       System.out.println("Weight: " + weight + " kg");
-
-&nbsp;       System.out.printf("Base Cost: %.2f LKR\\n", baseCost);
-
-&nbsp;       System.out.printf("Fuel Used: %.2f L\\n", fuelUsed);
-
-&nbsp;       System.out.printf("Fuel Cost: %.2f LKR\\n", fuelCost);
-
-&nbsp;       System.out.printf("Operational Cost: %.2f LKR\\n", operationalCost);
-
-&nbsp;       System.out.printf("Profit: %.2f LKR\\n", profit);
-
-&nbsp;       System.out.printf("Customer Charge: %.2f LKR\\n", customerCharge);
-
-&nbsp;       System.out.printf("Estimated Time: %.2f hours\\n", deliveryTime);
+&nbsp;                        shortestRoute == Double.MAX\_VALUE ? 0 : shortestRoute);
 
 &nbsp;   }
 
