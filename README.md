@@ -546,7 +546,7 @@ private static void handleDeliveryRequest() {
 
     }
 
- private static void generateReports() {
+private static void generateReports() {
 
 &nbsp;       System.out.println("\\n=== Performance Reports ===");
 
@@ -608,5 +608,5 @@ private static void handleDeliveryRequest() {
 
 &nbsp;   }
 
-&nbsp;   
+&nbsp;       
 
