@@ -548,65 +548,151 @@ private static void handleDeliveryRequest() {
 
 private static void generateReports() {
 
-&nbsp;       System.out.println("\\n=== Performance Reports ===");
+        System.out.println("\\n=== Performance Reports ===");
 
-&nbsp;       System.out.println("Total Deliveries Completed: " + deliveryCount);
+        System.out.println("Total Deliveries Completed: " + deliveryCount);
 
-&nbsp;       
+ 
 
-&nbsp;       double totalDistance = 0;
+        double totalDistance = 0;
 
-&nbsp;       double totalRevenue = 0;
+        double totalRevenue = 0;
 
-&nbsp;       double totalProfit = 0;
+        double totalProfit = 0;
 
-&nbsp;       double totalTime = 0;
+        double totalTime = 0;
 
-&nbsp;       double longestRoute = 0;
+        double longestRoute = 0;
 
-&nbsp;       double shortestRoute = Double.MAX\_VALUE;
+        double shortestRoute = Double.MAX\_VALUE;
 
-&nbsp;       
+ 
 
-&nbsp;       for (int i = 0; i < deliveryCount; i++) {
+        for (int i = 0; i < deliveryCount; i++) {
 
-&nbsp;           Delivery delivery = deliveries\[i];
+            Delivery delivery = deliveries\[i];
 
-&nbsp;           totalDistance += delivery.distance;
+            totalDistance += delivery.distance;
 
-&nbsp;           totalRevenue += delivery.cost;
+            totalRevenue += delivery.cost;
 
-&nbsp;           totalProfit += delivery.cost \* 0.25; // Assuming 25% profit margin
+            totalProfit += delivery.cost \* 0.25; // Assuming 25% profit margin
 
-&nbsp;           totalTime += delivery.time;
+            totalTime += delivery.time;
 
-&nbsp;           
+ 
 
-&nbsp;           if (delivery.distance > longestRoute) longestRoute = delivery.distance;
+            if (delivery.distance > longestRoute) longestRoute = delivery.distance;
 
-&nbsp;           if (delivery.distance < shortestRoute) shortestRoute = delivery.distance;
+            if (delivery.distance < shortestRoute) shortestRoute = delivery.distance;
 
-&nbsp;       }
+        }
 
-&nbsp;       
+ 
 
-&nbsp;       System.out.printf("Total Distance Covered: %.2f km\\n", totalDistance);
+        System.out.printf("Total Distance Covered: %.2f km\\n", totalDistance);
 
-&nbsp;       System.out.printf("Average Delivery Time: %.2f hours\\n", 
+        System.out.printf("Average Delivery Time: %.2f hours\\n",
 
-&nbsp;                        deliveryCount > 0 ? totalTime / deliveryCount : 0);
+                         deliveryCount > 0 ? totalTime / deliveryCount : 0);
 
-&nbsp;       System.out.printf("Total Revenue: %.2f LKR\\n", totalRevenue);
+        System.out.printf("Total Revenue: %.2f LKR\\n", totalRevenue);
 
-&nbsp;       System.out.printf("Total Profit: %.2f LKR\\n", totalProfit);
+        System.out.printf("Total Profit: %.2f LKR\\n", totalProfit);
 
-&nbsp;       System.out.printf("Longest Route: %.2f km\\n", longestRoute);
+        System.out.printf("Longest Route: %.2f km\\n", longestRoute);
 
-&nbsp;       System.out.printf("Shortest Route: %.2f km\\n", 
+        System.out.printf("Shortest Route: %.2f km\\n",
 
-&nbsp;                        shortestRoute == Double.MAX\_VALUE ? 0 : shortestRoute);
+                         shortestRoute == Double.MAX\_VALUE ? 0 : shortestRoute);
+
+    }
+
+ private static void loadData() {
+
+&nbsp;       // Basic implementation - can be extended to read from files
+
+&nbsp;       System.out.println("Loading system data...");
 
 &nbsp;   }
 
+&nbsp;   
+
+&nbsp;   private static void saveData() {
+
+&nbsp;       // Basic implementation - can be extended to save to files
+
+&nbsp;       System.out.println("Saving system data...");
+
+&nbsp;   }
+
+&nbsp;   
+
+&nbsp;   // Utility methods
+
+&nbsp;   private static int getIntInput(String message) {
+
+&nbsp;       while (true) {
+
+&nbsp;           try {
+
+&nbsp;               System.out.print(message);
+
+&nbsp;               return Integer.parseInt(sc.nextLine());
+
+&nbsp;           } catch (NumberFormatException e) {
+
+&nbsp;               System.out.println("Please enter a valid number!");
+
+&nbsp;           }
+
+&nbsp;       }
+
+&nbsp;   }
+
+&nbsp;   
+
+&nbsp;   // Delivery record class
+
+&nbsp;   static class Delivery {
+
+&nbsp;       String source;
+
+&nbsp;       String destination;
+
+&nbsp;       int distance;
+
+&nbsp;       String vehicleType;
+
+&nbsp;       int weight;
+
+&nbsp;       double cost;
+
+&nbsp;       double time;
+
 &nbsp;       
+
+&nbsp;       public Delivery(String source, String destination, int distance, 
+
+&nbsp;                      String vehicleType, int weight, double cost, double time) {
+
+&nbsp;           this.source = source;
+
+&nbsp;           this.destination = destination;
+
+&nbsp;           this.distance = distance;
+
+&nbsp;           this.vehicleType = vehicleType;
+
+&nbsp;           this.weight = weight;
+
+&nbsp;           this.cost = cost;
+
+&nbsp;           this.time = time;
+
+&nbsp;       }
+
+&nbsp;   }
+
+}
 
